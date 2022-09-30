@@ -27,10 +27,10 @@ def main() -> None:
         print(" [x] Received %r" % body.decode())
         time.sleep(body.count(b'.'))
         print(" [x] Done")
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
     # Connecting the consumer with the queue
     channel.basic_consume(queue='isccarrasco',
-                          auto_ack=True,
                           on_message_callback=callback)
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
