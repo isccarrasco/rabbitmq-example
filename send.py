@@ -2,15 +2,21 @@ import uuid
 
 import pika
 
+# Establishing the connection with the RabbitMQ server by
+# providing the URL or location of the server
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 
 
-exist = channel.queue_declare(queue='isccarrasco')
+# Creating the Queue and assigning a name to it
+channel.queue_declare(queue='isccarrasco')
 
-for i in range(100):
-    data = f'Hello world! key: {uuid.uuid1()}'
-    channel.basic_publish(exchange='', routing_key='isccarrasco', body=data)
-    print(f" [x] Sent '{data}'")
+# Sending the messages to the queue by providing the name
+# of the queue in the routing_key parameter
+data = f'Hello world! key: {uuid.uuid1()}'
+channel.basic_publish(exchange='',
+                      routing_key='isccarrasco',
+                      body=data)
+print(f" [x] Sent '{data}'")
 
 connection.close()
