@@ -30,6 +30,7 @@ def main() -> None:
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     # Connecting the consumer with the queue
+    channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue='isccarrasco-v2',
                           on_message_callback=callback)
 
