@@ -15,7 +15,7 @@ def main() -> None:
 
     # Connecting to the queue with the provided name
     # if the queue does not exist, will be created
-    channel.queue_declare(queue='isccarrasco')
+    channel.queue_declare(queue='isccarrasco-v2', durable=True)
 
     def callback(ch, method, properties, body):
         """
@@ -30,7 +30,7 @@ def main() -> None:
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     # Connecting the consumer with the queue
-    channel.basic_consume(queue='isccarrasco',
+    channel.basic_consume(queue='isccarrasco-v2',
                           on_message_callback=callback)
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
